@@ -1,0 +1,3 @@
+[submodule "ycm"]
+	path = ycm
+	url = https://github.com/mexus/ycm-flags
