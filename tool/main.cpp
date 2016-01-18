@@ -1,10 +1,13 @@
 #include <iostream>
+
 #include <boost/filesystem.hpp>
+
 #include "compilation_db.h"
 #include "cursor.h"
 #include "diagnostic.h"
 #include "file.h"
 #include "index.h"
+#include "options.h"
 #include "source_location.h"
 #include "translation-unit.h"
 
@@ -36,10 +39,6 @@ std::string NormalizePath(const std::string& file) {
 bool CheckCompileCommands(const std::string& path_to_compile_commands) {
     using namespace boost::filesystem;
     path cc_path(path_to_compile_commands);
-    if (!exists(cc_path)) {
-        std::cerr << "Path to `compile_commands.json` doesn't exist\n";
-        return false;
-    }
     if (!exists(cc_path / "compile_commands.json")) {
         std::cerr << "`compile_commands.json` doesn't exist in `" << cc_path << "`\n";
         return false;
@@ -52,26 +51,28 @@ void ChangeCurrentPath(const std::string& new_path) {
 }
 
 int main(int argc, char** argv) {
-    if (argc < 5) {
-        std::cerr << argv[0] << " <compile_commands.json dir> <file to parse> <line> <column>\n";
+    Options opts;
+    bool res;
+    std::tie(opts, res) = ParseCmdLine(argc, argv);
+    if (!res) {
         return 1;
     }
 
-    const bool display_diagnostic = true;
-    const int exclude_declarations_from_pch = 0;
-    const std::string path_to_compile_commands = NormalizePath(argv[1]);
-    const std::string file_name = NormalizePath(argv[2]);
-    const unsigned line = std::stoul(argv[3]);
-    const unsigned number = std::stoul(argv[4]);
+    opts.path_to_compile_commands = NormalizePath(opts.path_to_compile_commands);
+    opts.source_name = NormalizePath(opts.source_name);
+    if (opts.file_name.empty()) {
+        opts.file_name = opts.source_name;
+    }
+    opts.file_name = NormalizePath(opts.file_name);
 
-    if (!CheckCompileCommands(path_to_compile_commands)) {
+    if (!CheckCompileCommands(opts.path_to_compile_commands)) {
         return 1;
     }
-    ChangeCurrentPath(path_to_compile_commands);
+    ChangeCurrentPath(opts.path_to_compile_commands);
 
-    cx::Index index(exclude_declarations_from_pch, display_diagnostic);
-    cx::CompilationDatabase comp_db(path_to_compile_commands);
-    cx::TranslationUnit unit(index, file_name, comp_db);
+    cx::Index index(opts.exclude_declarations_from_pch, opts.display_diagnostic);
+    cx::CompilationDatabase comp_db(opts.path_to_compile_commands);
+    cx::TranslationUnit unit(index, opts.source_name, comp_db);
 
     auto diagnostics = unit.GetDiagnostics();
     for (auto& diag : diagnostics) {
@@ -83,8 +84,8 @@ int main(int argc, char** argv) {
     }
     std::cout << "File parsed OK\n";
 
-    cx::File file(unit, file_name);
-    cx::SourceLocation location(unit, file, line, number);
+    cx::File file(unit, opts.file_name);
+    cx::SourceLocation location(unit, file, opts.line, opts.column);
     cx::Cursor cursor(unit, location);
 
     if (cursor.isNull()) {

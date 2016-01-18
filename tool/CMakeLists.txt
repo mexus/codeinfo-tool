@@ -3,7 +3,7 @@ SET(EXE_NAME "codeinfo-tool")
 
 include_directories(".")
 
-find_package(Boost COMPONENTS system filesystem REQUIRED)
+find_package(Boost COMPONENTS system program_options filesystem REQUIRED)
 
 add_library(${LIB_NAME} SHARED
                "src/compilation_db.cpp"
@@ -11,6 +11,7 @@ add_library(${LIB_NAME} SHARED
                "src/diagnostic.cpp"
                "src/file.cpp"
                "src/index.cpp"
+               "src/options.cpp"
                "src/source_location.cpp"
                "src/temp_file.cpp"
                "src/translation-unit.cpp"
