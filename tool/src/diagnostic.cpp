@@ -1,14 +1,17 @@
 #include <diagnostic.h>
-#include <translation-unit.h>
 
 namespace cx {
 
-Diagnostic::Diagnostic(TranslationUnit& unit, unsigned index) {
-    diagnostic_ = clang_getDiagnostic(unit.unit_, index);
+Diagnostic::Diagnostic(Diagnostic&& other) : diagnostic_(std::move(other.diagnostic_)) {
+    other.diagnostic_ = nullptr;
 }
 
+Diagnostic::Diagnostic(CXDiagnostic diagnostic) : diagnostic_(diagnostic) {}
+
 Diagnostic::~Diagnostic() {
-    clang_disposeDiagnostic(diagnostic_);
+    if (diagnostic_) {
+        clang_disposeDiagnostic(diagnostic_);
+    }
 }
 
 std::string Diagnostic::formatDiagnostic(unsigned options) {

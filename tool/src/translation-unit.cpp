@@ -4,6 +4,7 @@
 #include <vector>
 
 #include <compilation_db.h>
+#include <diagnostic.h>
 #include <index.h>
 #include <source_location.h>
 
@@ -65,5 +66,14 @@ TranslationUnit::~TranslationUnit() {
 
 unsigned TranslationUnit::getNumDiagnostics() {
     return clang_getNumDiagnostics(unit_);
+}
+
+std::vector<Diagnostic> TranslationUnit::GetDiagnostics() {
+    std::vector<Diagnostic> result;
+    for (unsigned i = 0, l = getNumDiagnostics(); i != l; ++i) {
+        auto diagnostic = Diagnostic(clang_getDiagnostic(unit_, i));
+        result.push_back(std::move(diagnostic));
+    }
+    return result;
 }
 }

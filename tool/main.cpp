@@ -73,8 +73,8 @@ int main(int argc, char** argv) {
     cx::CompilationDatabase comp_db(path_to_compile_commands);
     cx::TranslationUnit unit(index, file_name, comp_db);
 
-    for (unsigned i = 0, n = unit.getNumDiagnostics(); i != n; ++i) {
-        cx::Diagnostic diag(unit, i);
+    auto diagnostics = unit.GetDiagnostics();
+    for (auto& diag : diagnostics) {
         auto severity = diag.getDiagnosticSeverity();
         std::cerr << SeverityToString(severity) << ": " << diag.formatDiagnostic() << "\n";
         if (severity >= CXDiagnostic_Error) {

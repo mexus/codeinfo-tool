@@ -8,7 +8,8 @@ class TranslationUnit;
 
 class Diagnostic {
 public:
-    Diagnostic(TranslationUnit& unit, unsigned index);
+    Diagnostic(Diagnostic&& other);
+    Diagnostic(const Diagnostic&) = delete;
     ~Diagnostic();
 
     std::string formatDiagnostic(unsigned options = clang_defaultDiagnosticDisplayOptions());
@@ -18,6 +19,8 @@ private:
     Diagnostic(CXDiagnostic diagnostic);
 
     CXDiagnostic diagnostic_;
+
+    friend TranslationUnit;
 };
 
 }

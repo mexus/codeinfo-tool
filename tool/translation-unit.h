@@ -1,12 +1,14 @@
 #pragma once
-#include <string>
 #include <clang-c/Index.h>
+#include <string>
+#include <vector>
 
 namespace cx {
 
 class Index;
 class CompilationDatabase;
 class SourceLocation;
+class Diagnostic;
 
 class TranslationUnit {
 public:
@@ -15,6 +17,7 @@ public:
     ~TranslationUnit();
 
     unsigned getNumDiagnostics();
+    std::vector<Diagnostic> GetDiagnostics();
 
 private:
     CXTranslationUnit unit_;
