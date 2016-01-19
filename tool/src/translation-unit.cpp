@@ -54,7 +54,7 @@ TranslationUnit::TranslationUnit(Index& index, const std::string& source, Compil
         c_arguments.push_back(arg.c_str());
     }
     CXErrorCode code = clang_parseTranslationUnit2(index.index_, source.c_str(), c_arguments.data(), c_arguments.size(),
-                                                   nullptr, 0, CXTranslationUnit_None, &unit_);
+                                                   nullptr, 0, CXTranslationUnit_DetailedPreprocessingRecord, &unit_);
     if (code != CXError_Success) {
         throw std::runtime_error("Error while parsing file `" + source + "`: " + ErrorCodeToString(code));
     }
