@@ -1,5 +1,6 @@
 #include <compilation_db.h>
 #include <iostream>
+#include <cx_string.h>
 
 namespace cx {
 
@@ -10,17 +11,11 @@ CompileCommand::CompileCommand(CompileCommand&& other) : command_(other.command_
 }
 
 std::string CompileCommand::getDirectory() {
-    CXString dir = clang_CompileCommand_getDirectory(command_);
-    std::string result(clang_getCString(dir));
-    clang_disposeString(dir);
-    return result;
+    return CXStringToStdString(clang_CompileCommand_getDirectory(command_));
 }
 
 // std::string CompileCommand::getFilename() {
-//     CXString path = clang_CompileCommand_getFilename(command_);
-//     std::string result(clang_getCString(path));
-//     clang_disposeString(path);
-//     return result;
+//     return CXStringToStdString(clang_CompileCommand_getFilename(command_));
 // }
 
 unsigned CompileCommand::getNumArgs() {
@@ -28,10 +23,7 @@ unsigned CompileCommand::getNumArgs() {
 }
 
 std::string CompileCommand::getArg(unsigned i) {
-    CXString data = clang_CompileCommand_getArg(command_, i);
-    std::string result(clang_getCString(data));
-    clang_disposeString(data);
-    return result;
+    return CXStringToStdString(clang_CompileCommand_getArg(command_, i));
 }
 
 std::vector<std::string> CompileCommand::GetArguments(int skip) {

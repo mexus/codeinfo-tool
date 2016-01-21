@@ -8,6 +8,7 @@ find_package(Boost COMPONENTS system program_options filesystem REQUIRED)
 add_library(${LIB_NAME} SHARED
                "src/compilation_db.cpp"
                "src/cursor.cpp"
+               "src/cx_string.cpp"
                "src/diagnostic.cpp"
                "src/file.cpp"
                "src/index.cpp"

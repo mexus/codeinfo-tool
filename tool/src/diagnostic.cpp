@@ -1,4 +1,5 @@
 #include <diagnostic.h>
+#include <cx_string.h>
 
 namespace cx {
 
@@ -15,10 +16,7 @@ Diagnostic::~Diagnostic() {
 }
 
 std::string Diagnostic::formatDiagnostic(unsigned options) {
-    CXString string = clang_formatDiagnostic(diagnostic_, options);
-    std::string result(clang_getCString(string));
-    clang_disposeString(string);
-    return result;
+    return CXStringToStdString(clang_formatDiagnostic(diagnostic_, options));
 }
 
 CXDiagnosticSeverity Diagnostic::getDiagnosticSeverity() {
