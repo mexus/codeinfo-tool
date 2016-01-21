@@ -53,4 +53,9 @@ CXChildVisitResult Cursor::VisitorWrapper(CXCursor cursor, CXCursor parent, CXCl
     auto visitor = static_cast<CursorVisitor*>(client_data);
     return visitor->Visit(Cursor(cursor), Cursor(parent));
 }
+
+Type Cursor::getCursorType() {
+    auto type = clang_getCursorType(cursor_);
+    return Type(std::move(type));
+}
 }

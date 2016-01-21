@@ -107,5 +107,13 @@ int main(int argc, char** argv) {
     std::cout << "Location is from main file? " << std::boolalpha << location.isFromMainFile() << "\n";
     std::cout << "Cursor kind: " << cursor.getCursorKind() << "\n";
 
+    auto type = cursor.getCursorType();
+    std::cout << "Type kind: " << type.GetKind() << "\n";
+    if (type.GetKind() != CXType_Invalid) {
+        std::cout << "Type spelling: " << type.getTypeSpelling() << "\n";
+        auto canonical_type = type.getCanonicalType();
+        std::cout << "Canonical type spelling: " << canonical_type.getTypeSpelling() << "\n";
+    }
+
     return 0;
 }

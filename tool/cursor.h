@@ -1,11 +1,12 @@
 #pragma once
 #include <clang-c/Index.h>
+#include <type.h>
 
 namespace cx {
 
-class TranslationUnit;
-class SourceLocation;
 class Cursor;
+class SourceLocation;
+class TranslationUnit;
 
 class CursorVisitor {
 public:
@@ -27,6 +28,7 @@ public:
     CXCursorKind getCursorKind();
     CXLanguageKind getCursorLanguage();
     bool isNull();
+    Type getCursorType();
 
     unsigned visitChildren(CursorVisitor* visitor);
 

@@ -16,6 +16,7 @@ add_library(${LIB_NAME} SHARED
                "src/source_location.cpp"
                "src/temp_file.cpp"
                "src/translation-unit.cpp"
+               "src/type.cpp"
 )
 target_link_libraries(${LIB_NAME} clang ${Boost_LIBRARIES})
 
