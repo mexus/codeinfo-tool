@@ -10,7 +10,8 @@ SourceLocation::SourceLocation() {
     location_ = clang_getNullLocation();
 }
 
-SourceLocation::SourceLocation(TranslationUnit& unit, File& file, unsigned line, unsigned column) {
+SourceLocation::SourceLocation(TranslationUnit& unit, File& file, unsigned line,
+                               unsigned column) {
     location_ = clang_getLocation(unit.unit_, file.file_, line, column);
 }
 
@@ -22,7 +23,8 @@ bool SourceLocation::isFromMainFile() {
     return clang_Location_isFromMainFile(location_) != 0;
 }
 
-void SourceLocation::getFileLocation(File* file, unsigned* line, unsigned* column, unsigned* offset) {
+void SourceLocation::getFileLocation(File* file, unsigned* line,
+                                     unsigned* column, unsigned* offset) {
     CXFile* cx_file = nullptr;
     if (file) {
         cx_file = &(file->file_);

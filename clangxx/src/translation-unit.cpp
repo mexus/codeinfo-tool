@@ -30,11 +30,13 @@ std::string ErrorCodeToString(CXErrorCode code) {
 }
 }
 
-TranslationUnit::TranslationUnit(Index& index, const std::string& source, CompilationDatabase& comp_db) {
+TranslationUnit::TranslationUnit(Index& index, const std::string& source,
+                                 CompilationDatabase& comp_db) {
     auto commands = comp_db.getCompileCommands(source);
     unsigned cmd_args = commands.getSize();
     if (cmd_args == 0) {
-        throw std::runtime_error("No compilation info for file `" + source + "`");
+        throw std::runtime_error("No compilation info for file `" + source +
+                                 "`");
     }
     auto command = commands.getCommand(0);
     auto arguments = command.GetArguments(1);
@@ -53,10 +55,12 @@ TranslationUnit::TranslationUnit(Index& index, const std::string& source, Compil
         }
         c_arguments.push_back(arg.c_str());
     }
-    CXErrorCode code = clang_parseTranslationUnit2(index.index_, source.c_str(), c_arguments.data(), c_arguments.size(),
-                                                   nullptr, 0, CXTranslationUnit_DetailedPreprocessingRecord, &unit_);
+    CXErrorCode code = clang_parseTranslationUnit2(
+        index.index_, source.c_str(), c_arguments.data(), c_arguments.size(),
+        nullptr, 0, CXTranslationUnit_DetailedPreprocessingRecord, &unit_);
     if (code != CXError_Success) {
-        throw std::runtime_error("Error while parsing file `" + source + "`: " + ErrorCodeToString(code));
+        throw std::runtime_error("Error while parsing file `" + source + "`: " +
+                                 ErrorCodeToString(code));
     }
 }
 

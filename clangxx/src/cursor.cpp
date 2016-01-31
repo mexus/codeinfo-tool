@@ -11,7 +11,8 @@ CursorVisitor::CursorVisitor() {}
 
 CursorVisitor::~CursorVisitor() {}
 
-CXChildVisitResult CursorVisitor::Visit(Cursor&& /*cursor*/, Cursor&& /*parent*/) {
+CXChildVisitResult CursorVisitor::Visit(Cursor&& /*cursor*/,
+                                        Cursor&& /*parent*/) {
     return CXChildVisit_Continue;
 }
 
@@ -46,10 +47,12 @@ CXLanguageKind Cursor::getCursorLanguage() {
 }
 
 unsigned Cursor::visitChildren(CursorVisitor* visitor) {
-    return clang_visitChildren(cursor_, &Cursor::VisitorWrapper, static_cast<CXClientData>(visitor));
+    return clang_visitChildren(cursor_, &Cursor::VisitorWrapper,
+                               static_cast<CXClientData>(visitor));
 }
 
-CXChildVisitResult Cursor::VisitorWrapper(CXCursor cursor, CXCursor parent, CXClientData client_data) {
+CXChildVisitResult Cursor::VisitorWrapper(CXCursor cursor, CXCursor parent,
+                                          CXClientData client_data) {
     auto visitor = static_cast<CursorVisitor*>(client_data);
     return visitor->Visit(Cursor(cursor), Cursor(parent));
 }

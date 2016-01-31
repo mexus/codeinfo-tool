@@ -8,7 +8,8 @@ namespace clangxx {
 
 CompileCommand::CompileCommand(CXCompileCommand command) : command_(command) {}
 
-CompileCommand::CompileCommand(CompileCommand&& other) : command_(other.command_) {
+CompileCommand::CompileCommand(CompileCommand&& other)
+        : command_(other.command_) {
     other.command_ = nullptr;
 }
 
@@ -37,7 +38,8 @@ std::vector<std::string> CompileCommand::GetArguments(int skip) {
     return result;
 }
 
-CompileCommands::CompileCommands(CXCompileCommands commands) : commands_(commands) {}
+CompileCommands::CompileCommands(CXCompileCommands commands)
+        : commands_(commands) {}
 
 CompileCommands::~CompileCommands() {
     clang_CompileCommands_dispose(commands_);
@@ -56,7 +58,8 @@ CompilationDatabase::CompilationDatabase(const std::string& path) {
     db_ = clang_CompilationDatabase_fromDirectory(path.c_str(), &error);
     if (error != CXCompilationDatabase_NoError) {
         std::cout << db_ << "\n";
-        throw std::runtime_error("Can't load compilation database from path `" + path + "`");
+        throw std::runtime_error("Can't load compilation database from path `" +
+                                 path + "`");
     }
 }
 
@@ -64,8 +67,10 @@ CompilationDatabase::~CompilationDatabase() {
     clang_CompilationDatabase_dispose(db_);
 }
 
-CompileCommands CompilationDatabase::getCompileCommands(const std::string& file_name) {
-    CXCompileCommands commands = clang_CompilationDatabase_getCompileCommands(db_, file_name.c_str());
+CompileCommands CompilationDatabase::getCompileCommands(
+    const std::string& file_name) {
+    CXCompileCommands commands =
+        clang_CompilationDatabase_getCompileCommands(db_, file_name.c_str());
     return CompileCommands(commands);
 }
 

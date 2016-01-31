@@ -4,7 +4,8 @@
 
 namespace clangxx {
 
-Diagnostic::Diagnostic(Diagnostic&& other) : diagnostic_(std::move(other.diagnostic_)) {
+Diagnostic::Diagnostic(Diagnostic&& other)
+        : diagnostic_(std::move(other.diagnostic_)) {
     other.diagnostic_ = nullptr;
 }
 

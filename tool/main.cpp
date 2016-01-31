@@ -41,7 +41,8 @@ bool CheckCompileCommands(const std::string& path_to_compile_commands) {
     using namespace boost::filesystem;
     path cc_path(path_to_compile_commands);
     if (!exists(cc_path / "compile_commands.json")) {
-        std::cerr << "`compile_commands.json` doesn't exist in `" << cc_path << "`\n";
+        std::cerr << "`compile_commands.json` doesn't exist in `" << cc_path
+                  << "`\n";
         return false;
     }
     return true;
@@ -59,7 +60,8 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    opts.path_to_compile_commands = NormalizePath(opts.path_to_compile_commands);
+    opts.path_to_compile_commands =
+        NormalizePath(opts.path_to_compile_commands);
     opts.source_name = NormalizePath(opts.source_name);
     if (opts.file_name.empty()) {
         opts.file_name = opts.source_name;
@@ -71,14 +73,16 @@ int main(int argc, char** argv) {
     }
     ChangeCurrentPath(opts.path_to_compile_commands);
 
-    clangxx::Index index(opts.exclude_declarations_from_pch, opts.display_diagnostic);
+    clangxx::Index index(opts.exclude_declarations_from_pch,
+                         opts.display_diagnostic);
     clangxx::CompilationDatabase comp_db(opts.path_to_compile_commands);
     clangxx::TranslationUnit unit(index, opts.source_name, comp_db);
 
     auto diagnostics = unit.GetDiagnostics();
     for (auto& diag : diagnostics) {
         auto severity = diag.getDiagnosticSeverity();
-        std::cerr << SeverityToString(severity) << ": " << diag.formatDiagnostic() << "\n";
+        std::cerr << SeverityToString(severity) << ": "
+                  << diag.formatDiagnostic() << "\n";
         if (severity >= CXDiagnostic_Error) {
             return 1;
         }
@@ -95,7 +99,8 @@ int main(int argc, char** argv) {
     }
 
     unsigned effective_line, effective_column, effective_offset;
-    location.getFileLocation(&file, &effective_line, &effective_column, &effective_offset);
+    location.getFileLocation(&file, &effective_line, &effective_column,
+                             &effective_offset);
     std::cout << "Location: ";
     if (file) {
         std::cout << file.getFileName();
@@ -103,9 +108,11 @@ int main(int argc, char** argv) {
         std::cout << "[no file]";
     }
     std::cout << ", line " << effective_line << ", "
-              << "column " << effective_column << ", offset " << effective_offset << "\n";
+              << "column " << effective_column << ", offset "
+              << effective_offset << "\n";
 
-    std::cout << "Location is from main file? " << std::boolalpha << location.isFromMainFile() << "\n";
+    std::cout << "Location is from main file? " << std::boolalpha
+              << location.isFromMainFile() << "\n";
     std::cout << "Cursor kind: " << cursor.getCursorKind() << "\n";
 
     auto type = cursor.getCursorType();
@@ -113,7 +120,8 @@ int main(int argc, char** argv) {
     if (type.GetKind() != CXType_Invalid) {
         std::cout << "Type spelling: " << type.getTypeSpelling() << "\n";
         auto canonical_type = type.getCanonicalType();
-        std::cout << "Canonical type spelling: " << canonical_type.getTypeSpelling() << "\n";
+        std::cout << "Canonical type spelling: "
+                  << canonical_type.getTypeSpelling() << "\n";
     }
 
     return 0;
