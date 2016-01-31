@@ -1,6 +1,6 @@
-#include <index.h>
+#include <clangxx/index.h>
 
-namespace cx {
+namespace clangxx {
 
 Index::Index(int exclude_declarations_from_pch, bool display_diagnostics) {
     index_ = clang_createIndex(exclude_declarations_from_pch, display_diagnostics ? 0 : 1);

@@ -1,7 +1,7 @@
 #pragma once
 #include <clang-c/Index.h>
 
-namespace cx {
+namespace clangxx {
 
 class Index {
 public:
@@ -14,5 +14,4 @@ private:
 
     friend class TranslationUnit;
 };
-
 }

@@ -1,11 +1,11 @@
-#include <file.h>
+#include <clangxx/file.h>
 
 #include <stdexcept>
 
-#include <cx_string.h>
-#include <translation-unit.h>
+#include <clangxx/cx_string.h>
+#include <clangxx/translation-unit.h>
 
-namespace cx {
+namespace clangxx {
 
 File::File(TranslationUnit& unit, const std::string& file_name) {
     file_ = clang_getFile(unit.unit_, file_name.c_str());

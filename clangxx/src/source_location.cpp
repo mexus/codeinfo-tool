@@ -1,10 +1,10 @@
-#include <source_location.h>
+#include <clangxx/source_location.h>
 
-#include <cursor.h>
-#include <file.h>
-#include <translation-unit.h>
+#include <clangxx/cursor.h>
+#include <clangxx/file.h>
+#include <clangxx/translation-unit.h>
 
-namespace cx {
+namespace clangxx {
 
 SourceLocation::SourceLocation() {
     location_ = clang_getNullLocation();

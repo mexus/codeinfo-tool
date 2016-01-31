@@ -1,11 +1,11 @@
-#include <cursor.h>
+#include <clangxx/cursor.h>
 
 #include <iostream>
 
-#include <source_location.h>
-#include <translation-unit.h>
+#include <clangxx/source_location.h>
+#include <clangxx/translation-unit.h>
 
-namespace cx {
+namespace clangxx {
 
 CursorVisitor::CursorVisitor() {}
 

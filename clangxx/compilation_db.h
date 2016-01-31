@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-namespace cx {
+namespace clangxx {
 
 class CompileCommand {
 public:
@@ -39,7 +39,6 @@ private:
     CompileCommands(CXCompileCommands commands);
 
     friend class CompilationDatabase;
-
 };
 
 class CompilationDatabase {
@@ -50,7 +49,6 @@ public:
     CompileCommands getCompileCommands(const std::string& file_name);
     CompileCommands getAllCompileCommands();
 
-
     void SetClangHeadersLocation(const std::string& path);
     std::string GetClangHeadersLocation() const;
 
@@ -58,5 +56,4 @@ private:
     CXCompilationDatabase db_;
     std::string clang_headers_path_ = "/usr/lib/clang/3.7.1/include/";
 };
-
 }

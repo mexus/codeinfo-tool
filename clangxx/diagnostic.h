@@ -2,7 +2,7 @@
 #include <clang-c/Index.h>
 #include <string>
 
-namespace cx {
+namespace clangxx {
 
 class TranslationUnit;
 
@@ -22,5 +22,4 @@ private:
 
     friend TranslationUnit;
 };
-
 }

@@ -1,14 +1,14 @@
-#include <translation-unit.h>
+#include <clangxx/translation-unit.h>
 
 #include <stdexcept>
 #include <vector>
 
-#include <compilation_db.h>
-#include <diagnostic.h>
-#include <index.h>
-#include <source_location.h>
+#include <clangxx/compilation_db.h>
+#include <clangxx/diagnostic.h>
+#include <clangxx/index.h>
+#include <clangxx/source_location.h>
 
-namespace cx {
+namespace clangxx {
 
 namespace {
 

@@ -1,8 +1,8 @@
 #pragma once
 #include <clang-c/Index.h>
-#include <type.h>
+#include "type.h"
 
-namespace cx {
+namespace clangxx {
 
 class Cursor;
 class SourceLocation;
@@ -41,5 +41,4 @@ private:
 
     static CXChildVisitResult VisitorWrapper(CXCursor cursor, CXCursor parent, CXClientData client_data);
 };
-
 }

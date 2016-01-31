@@ -2,14 +2,15 @@
 
 #include <boost/filesystem.hpp>
 
-#include "compilation_db.h"
-#include "cursor.h"
-#include "diagnostic.h"
-#include "file.h"
-#include "index.h"
+#include <clangxx/compilation_db.h>
+#include <clangxx/cursor.h>
+#include <clangxx/diagnostic.h>
+#include <clangxx/file.h>
+#include <clangxx/index.h>
+#include <clangxx/source_location.h>
+#include <clangxx/translation-unit.h>
+
 #include "options.h"
-#include "source_location.h"
-#include "translation-unit.h"
 
 namespace {
 
@@ -70,9 +71,9 @@ int main(int argc, char** argv) {
     }
     ChangeCurrentPath(opts.path_to_compile_commands);
 
-    cx::Index index(opts.exclude_declarations_from_pch, opts.display_diagnostic);
-    cx::CompilationDatabase comp_db(opts.path_to_compile_commands);
-    cx::TranslationUnit unit(index, opts.source_name, comp_db);
+    clangxx::Index index(opts.exclude_declarations_from_pch, opts.display_diagnostic);
+    clangxx::CompilationDatabase comp_db(opts.path_to_compile_commands);
+    clangxx::TranslationUnit unit(index, opts.source_name, comp_db);
 
     auto diagnostics = unit.GetDiagnostics();
     for (auto& diag : diagnostics) {
@@ -84,9 +85,9 @@ int main(int argc, char** argv) {
     }
     std::cout << "File parsed OK\n";
 
-    cx::File file(unit, opts.file_name);
-    cx::SourceLocation location(unit, file, opts.line, opts.column);
-    cx::Cursor cursor(unit, location);
+    clangxx::File file(unit, opts.file_name);
+    clangxx::SourceLocation location(unit, file, opts.line, opts.column);
+    clangxx::Cursor cursor(unit, location);
 
     if (cursor.isNull()) {
         std::cerr << "Cursor is null\n";

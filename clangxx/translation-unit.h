@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-namespace cx {
+namespace clangxx {
 
 class Index;
 class CompilationDatabase;
@@ -27,5 +27,4 @@ private:
     friend class Cursor;
     friend class Diagnostic;
 };
-
 }

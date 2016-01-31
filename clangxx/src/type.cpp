@@ -1,10 +1,10 @@
-#include <type.h>
+#include <clangxx/type.h>
 
 #include <utility>
 
-#include <cx_string.h>
+#include <clangxx/cx_string.h>
 
-namespace cx {
+namespace clangxx {
 
 Type::Type(Type&& other) : type_(std::move(other.type_)) {}
 

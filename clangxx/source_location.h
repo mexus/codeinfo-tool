@@ -1,7 +1,7 @@
 #pragma once
 #include <clang-c/Index.h>
 
-namespace cx {
+namespace clangxx {
 
 class TranslationUnit;
 class File;
@@ -14,7 +14,8 @@ public:
     SourceLocation(const SourceLocation&) = delete;
 
     bool isFromMainFile();
-    void getFileLocation(File* file = nullptr, unsigned* line = nullptr, unsigned* column = nullptr, unsigned* offset = nullptr);
+    void getFileLocation(File* file = nullptr, unsigned* line = nullptr, unsigned* column = nullptr,
+                         unsigned* offset = nullptr);
 
 private:
     SourceLocation();
@@ -23,5 +24,4 @@ private:
 
     friend class Cursor;
 };
-
 }

@@ -1,8 +1,10 @@
-#include <compilation_db.h>
-#include <iostream>
-#include <cx_string.h>
+#include <clangxx/compilation_db.h>
 
-namespace cx {
+#include <iostream>
+
+#include <clangxx/cx_string.h>
+
+namespace clangxx {
 
 CompileCommand::CompileCommand(CXCompileCommand command) : command_(command) {}
 

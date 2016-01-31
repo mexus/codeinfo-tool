@@ -11,6 +11,8 @@ SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CMAKE_CXX_EXTRA_FLAGS}")
 
 enable_testing()
 
+include_directories(".")
+add_subdirectory("clangxx")
 add_subdirectory("tool")
 
 add_custom_target(check COMMAND ${CMAKE_CTEST_COMMAND} "--output-on-failure")

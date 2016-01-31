@@ -1,7 +1,8 @@
-#include <diagnostic.h>
-#include <cx_string.h>
+#include <clangxx/diagnostic.h>
 
-namespace cx {
+#include <clangxx/cx_string.h>
+
+namespace clangxx {
 
 Diagnostic::Diagnostic(Diagnostic&& other) : diagnostic_(std::move(other.diagnostic_)) {
     other.diagnostic_ = nullptr;

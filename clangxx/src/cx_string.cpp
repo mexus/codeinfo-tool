@@ -1,7 +1,7 @@
-#include <cx_string.h>
+#include <clangxx/cx_string.h>
 
 namespace {
-template<class T>
+template <class T>
 std::string Convert(T&& string) {
     std::string result(clang_getCString(string));
     clang_disposeString(string);
@@ -9,7 +9,7 @@ std::string Convert(T&& string) {
 }
 }
 
-namespace cx {
+namespace clangxx {
 
 std::string CXStringToStdString(CXString& string) {
     return Convert(std::forward<CXString&>(string));
